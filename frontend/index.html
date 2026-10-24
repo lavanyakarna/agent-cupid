@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Cupid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Caveat:wght@700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--p:#2B1240;--pk:#FF3D8B;--pd:#E02E6F;--y:#FFF1B8;--l:#B9A2FF;--m:#6EF0C2;--w:#fff;--sh:4px 4px 0 var(--p);--f:'Bagel Fat One','Arial Rounded MT Bold',system-ui,sans-serif;--h:'Caveat','Comic Sans MS',cursive;--dots:radial-gradient(rgba(43,18,64,.14) 1.2px,transparent 1.2px) 0 0/10px 10px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100dvh;background:var(--dots),var(--y);color:var(--p);font:700 16px Nunito,system-ui,sans-serif;overflow-x:hidden}
+body.lock{overflow:hidden}button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}svg{display:block}i{font-style:normal}
+.ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.hide{display:none!important}
+@keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}@keyframes up{from{opacity:0;transform:translateY(18px)}}@keyframes bob{50%{transform:translateY(-8px)}}
+body.rm *{animation:none!important;transition:none!important}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.btn{font:400 22px var(--f);background:var(--pk);color:#fff;border:4px solid var(--p);border-radius:99px;padding:12px 28px;box-shadow:var(--sh);transition:transform .1s,box-shadow .1s}
+.btn:active,.ac:active{transform:translate(4px,4px);box-shadow:none}.btn.s{font-size:16px;padding:8px 18px}
+.cd{background:#fff;border:4px solid var(--p);border-radius:24px;box-shadow:6px 6px 0 var(--p)}
+/* intro */
+#intro{position:fixed;inset:0;z-index:99;background:var(--dots),var(--y);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;transition:opacity .5s;overflow:hidden;cursor:pointer}
+.ib{position:relative;display:flex}.ib .l{animation:inL 1s cubic-bezier(.34,1.56,.64,1) both}.ib .r{animation:inR 1s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes inL{0%{transform:translateX(-70vw) rotate(-25deg)}70%{transform:translateX(14px) rotate(7deg)}100%{transform:none}}@keyframes inR{0%{transform:translateX(70vw) rotate(25deg)}70%{transform:translateX(-14px) rotate(-7deg)}100%{transform:none}}
+.hp{position:absolute;left:50%;top:-24px;width:48px;transform:translateX(-50%) scale(0);animation:hpop .6s 1s forwards}@keyframes hpop{60%{transform:translateX(-50%) scale(1.4)}100%{transform:translateX(-50%) scale(1)}}
+#ti{font:400 clamp(48px,11vw,104px) var(--f);color:var(--pk);-webkit-text-stroke:8px var(--p);paint-order:stroke fill;text-shadow:6px 6px 0 var(--p);display:flex}
+#ti span{display:inline-block;animation:drop .6s cubic-bezier(.34,1.56,.64,1) both}@keyframes drop{0%{transform:translateY(-140px) scaleY(1.4);opacity:0}60%{transform:scale(1.2,.75);opacity:1}100%{transform:none}}
+#tg{font:700 28px var(--h);min-height:34px;text-align:center;padding:0 12px}#go{opacity:0;transform:rotate(-3deg);animation:pop .5s 3.2s forwards}
+#wp{position:absolute;width:40px;height:40px;border-radius:50%;background:var(--pk);transform:translate(-50%,-50%) scale(0);transition:transform .65s ease-in;pointer-events:none}#wp.on{transform:translate(-50%,-50%) scale(120)}
+/* chrome */
+header{position:sticky;top:0;z-index:50;background:var(--y);border-bottom:3px solid var(--p);padding:10px 20px;display:flex;align-items:center;gap:14px}
+.logo{font:400 26px var(--f);color:var(--pk);-webkit-text-stroke:5px var(--p);paint-order:stroke fill;display:flex;align-items:center;gap:8px;margin-right:auto}.logo svg{width:28px;fill:var(--pk);stroke:var(--p);stroke-width:2}
+nav.top{display:flex;gap:6px}nav.top a{font:400 16px var(--f);padding:8px 18px;border:3px solid transparent;border-radius:99px}nav a.on{background:var(--pk);color:#fff;border-color:var(--p);box-shadow:3px 3px 0 var(--p)}
+.tk{background:#fff;border:3px solid var(--p);border-radius:12px;padding:5px 12px;font:400 15px var(--f);box-shadow:3px 3px 0 var(--p);white-space:nowrap}.lv{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--pk);animation:pu 1s infinite}@keyframes pu{50%{transform:scale(1.6);opacity:.5}}
+.rb{width:42px;height:42px;border:3px solid var(--p);border-radius:12px;background:#fff;box-shadow:3px 3px 0 var(--p);display:grid;place-items:center}
+.bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:60;background:#fff;border-top:3px solid var(--p);justify-content:space-around;padding:8px 0 12px}
+.bar a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:800;padding:6px 14px;border-radius:99px;transition:transform .2s}.bar a.on{transform:translateY(-6px)}
+main{max-width:1180px;margin:0 auto;padding:28px 20px}.scr{display:none}.scr.on{display:block;animation:up .4s both}
+h2{font:400 clamp(30px,4vw,46px) var(--f);color:var(--pk);-webkit-text-stroke:8px var(--p);paint-order:stroke fill;text-shadow:4px 4px 0 var(--p);margin-bottom:20px}
+footer{text-align:center;font-size:12px;padding:0 0 24px;opacity:.7}
+.two{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:36px;align-items:start}.two.d{grid-template-columns:300px minmax(0,1fr)}
+@media(max-width:1023px){nav.top{display:none}.bar{display:flex}.two,.two.d{grid-template-columns:1fr}footer{padding-bottom:100px}.tk{font-size:13px}}
+/* mascot */
+.mc{animation:bob 3s ease-in-out infinite}.talk{animation:bob .6s ease-in-out infinite}.ey,.mo{transform-box:fill-box;transform-origin:center}.ey{animation:bl 4s infinite}@keyframes bl{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.talk .mo{animation:mo .25s infinite alternate}@keyframes mo{to{transform:scaleY(2.6)}}
+/* people */
+#st{position:relative;width:min(340px,86vw);height:510px;margin:6px auto 28px}
+.c{position:absolute;inset:0;background:#fff;border:4px solid var(--p);border-radius:24px;box-shadow:6px 6px 0 var(--p);overflow:hidden;touch-action:pan-y;user-select:none;cursor:grab;transition:transform .45s cubic-bezier(.34,1.56,.64,1),opacity .3s;display:flex;flex-direction:column}
+.ph{height:270px;border-bottom:4px solid var(--p);border-radius:170px 170px 0 0;position:relative;flex:none;overflow:hidden}.ph img{width:100%;height:100%;object-fit:cover;pointer-events:none}.mb{position:absolute;right:8px;bottom:4px}
+.tag{position:absolute;top:16px;left:18px;background:var(--y);border:3px solid var(--p);border-radius:10px;padding:2px 10px;font:400 13px var(--f);box-shadow:3px 3px 0 var(--p);transform:rotate(-6deg)}
+.inf{padding:12px 16px;display:flex;flex-direction:column;gap:6px}.nm{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}.nm b{font:400 26px var(--f)}
+.role{background:var(--y);border:3px solid var(--p);border-radius:10px;padding:2px 10px;font:400 13px var(--f);transform:rotate(-2deg)}.bio{font:700 23px/1 var(--h)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{border:3px solid var(--p);border-radius:10px;padding:2px 10px;font-size:12px;font-weight:800;box-shadow:2px 2px 0 var(--p);background:var(--m)}.chip:nth-child(2){background:var(--l)}.chip:nth-child(3){background:var(--y)}
+.sm{position:absolute;top:70px;font:400 32px var(--f);border:5px solid;border-radius:10px;padding:0 10px;opacity:0;pointer-events:none;z-index:5;background:rgba(255,255,255,.9)}.sm.y{left:14px;color:#17b26a;transform:rotate(-14deg)}.sm.n{right:14px;color:#f23;transform:rotate(14deg)}
+.acts{display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap}
+.ac{width:60px;height:60px;border-radius:50%;border:4px solid var(--p);background:#fff;box-shadow:var(--sh);display:grid;place-items:center;transition:transform .1s,box-shadow .1s}
+.ac.n{background:#ff8a7a}.ac.u{background:var(--y)}.ac.l{background:var(--pk);color:#fff;width:72px;height:72px}.ac.l svg{fill:#fff}.ac.s{background:var(--l)}.ac svg{width:28px;height:28px}
+.bh{position:fixed;width:20px;pointer-events:none;z-index:90;animation:bh .7s ease-out forwards}@keyframes bh{to{transform:translate(var(--x),var(--y)) scale(.4);opacity:0}}
+.wy{padding:20px}.wy h3{font:400 22px var(--f);color:var(--pd);margin-bottom:10px}.wy h4{font:400 15px var(--f);margin:10px 0 4px}
+.sp{display:flex;gap:10px;align-items:center;font:700 22px/1.1 var(--h);background:var(--y);border:3px solid var(--p);border-radius:16px;padding:8px 12px}
+.pl{display:inline-flex;align-items:center;gap:5px;border:3px solid var(--p);border-radius:99px;padding:3px 10px 3px 5px;font-size:13px;font-weight:800;margin:0 4px 6px 0;box-shadow:2px 2px 0 var(--p)}
+.s{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:5px;font:800 9px sans-serif;color:#fff}.s.li{background:#0A66C2}.s.ig{background:linear-gradient(45deg,#f9a03f,#e1306c,#833ab4)}
+/* dates */
+.di{display:flex;align-items:center;gap:8px;background:#fff;border:3px solid var(--p);border-radius:16px;padding:8px 10px;margin-top:12px;cursor:pointer;box-shadow:var(--sh)}.di.on{background:#ffd0e3}
+.di img,.pa,.ha{width:40px;height:40px;border-radius:50%;border:2px solid var(--p);object-fit:cover;background:#ffc2dc}.di img+img{margin-left:-20px}.dn{font:400 16px var(--f)}.di small{font-weight:800;color:var(--pd)}.lvt{animation:pu 1s infinite}
+.stg{height:560px;display:flex;flex-direction:column;position:relative;overflow:hidden}.sc{position:absolute;top:14px;right:14px;background:#fff;border:3px solid var(--p);border-radius:10px;padding:2px 10px;font:400 14px var(--f);transform:rotate(3deg);z-index:2}
+.chat{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:56px 18px 10px;overflow:hidden}
+.bb{max-width:74%;border:3px solid var(--p);border-radius:18px;padding:8px 14px;font:700 23px/1.05 var(--h);box-shadow:3px 3px 0 var(--p);animation:pop .35s cubic-bezier(.34,1.56,.64,1)}.bb.a{align-self:flex-start;background:#ffc2dc}.bb.b{align-self:flex-end;background:#d9cdff}.bb.old{opacity:.55}
+.ty i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--p);margin:0 2px;animation:bn .8s infinite}.ty i:nth-child(2){animation-delay:.15s}.ty i:nth-child(3){animation-delay:.3s}@keyframes bn{50%{transform:translateY(-6px)}}
+.act{display:flex;justify-content:space-between;align-items:flex-end;padding:0 20px 14px;height:200px;position:relative}.act>div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.an{font:400 14px var(--f);background:#fff;border:3px solid var(--p);border-radius:10px;padding:1px 10px}
+.gg{position:absolute;left:50%;bottom:34px;width:104px;transform:translateX(-50%);overflow:visible}.gn{position:absolute;left:50%;bottom:72px;transform:translateX(-50%);font:400 20px var(--f)}
+#lq{transform-box:fill-box;transition:transform .8s cubic-bezier(.34,1.56,.64,1)}.fl{position:absolute;left:50%;bottom:150px;font-size:32px;animation:fl 1s forwards;z-index:3}@keyframes fl{to{transform:translateY(-60px);opacity:0}}
+.vd{position:absolute;inset:0;background:rgba(43,18,64,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:20px;z-index:4;animation:pop .4s both;color:#fff}
+.stp{font:400 clamp(34px,6vw,52px) var(--f);color:var(--pk);border:6px solid var(--pk);padding:2px 18px;border-radius:12px;transform:rotate(-8deg);background:#fff}.vd p{font:700 26px var(--h)}
+.cf{position:absolute;top:-14px;width:10px;height:14px;animation:fall 1.8s linear forwards;z-index:5}@keyframes fall{to{transform:translateY(580px) rotate(540deg)}}
+.ctl{display:flex;gap:10px;justify-content:center;align-items:center;margin-top:16px}.ctl .ac{width:46px;height:46px}.ctl .ac svg{width:22px;height:22px}
+.sb{border:3px solid var(--p);border-radius:12px;padding:6px 14px;font:400 16px var(--f);background:#fff;box-shadow:3px 3px 0 var(--p)}.sb.on{background:var(--pk);color:#fff}
+.mo2{position:fixed;inset:0;z-index:80;background:rgba(43,18,64,.6);display:grid;place-items:center;padding:16px;overflow:auto}.mdl{width:min(660px,100%);padding:24px;position:relative;text-align:center}.mdl h2{font-size:34px}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}.ms{background:#ffeef5;border:3px solid var(--p);border-radius:16px;height:110px;display:flex;align-items:center;justify-content:space-around;padding:4px}.ms b{font:400 22px var(--f);color:var(--pd);animation:pop .3s}.cn{font:400 22px var(--f)}
+.x{position:absolute;top:10px;right:14px;font:400 30px var(--f)}
+/* matches */
+.nar{max-width:820px;margin:0 auto}.pr{display:flex;gap:12px;align-items:center;margin-bottom:10px;flex-wrap:wrap}select{font:400 16px var(--f);padding:8px 12px;border:3px solid var(--p);border-radius:12px;background:#fff;box-shadow:3px 3px 0 var(--p)}
+#pod{display:flex;align-items:flex-end;justify-content:center;gap:14px;margin:30px 0 28px}.pc{display:flex;flex-direction:column;align-items:center;gap:4px;width:min(200px,30vw);text-align:center}.pc .pa{width:76px;height:76px;border-width:3px}
+.pn{font:400 20px var(--f)}.gs{font:700 18px/1 var(--h)}.cr{height:34px;display:grid;place-items:center}.cr svg{width:34px}
+.md{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;border:3px solid var(--p);background:#ddd;font:400 14px var(--f)}
+.bk{width:100%;border:4px solid var(--p);border-bottom:0;border-radius:14px 14px 0 0;box-shadow:var(--sh);display:grid;place-items:center;font:400 34px var(--f);transform-origin:bottom;animation:rise .6s both}@keyframes rise{from{transform:scaleY(0)}}
+.rg{border-radius:50%;background:conic-gradient(var(--pk) calc(var(--v)*1%),#eee 0);display:grid;place-items:center;border:3px solid var(--p);position:relative;flex:none}.rg::before{content:"";position:absolute;inset:6px;background:#fff;border-radius:50%}.rg b{position:relative;font:400 16px var(--f)}
+.rw{display:flex;align-items:center;gap:12px;background:#fff;border:3px solid var(--p);border-radius:16px;padding:10px 12px;margin-bottom:12px;box-shadow:var(--sh)}.rk{width:34px;height:34px;border-radius:50%;background:var(--pk);color:#fff;border:3px solid var(--p);display:grid;place-items:center;font:400 16px var(--f);flex:none}
+.gr{flex:1;min-width:0}.gr b{font:400 18px var(--f)}.gr small{display:block;font:700 19px/1 var(--h)}.lk{font:400 14px var(--f);color:var(--pd);text-decoration:underline}
+.hm{display:grid;grid-template-columns:36px repeat(8,1fr);gap:6px;align-items:center;padding:16px;overflow:visible}.ha{width:32px;height:32px}
+.hc{aspect-ratio:1;border:2px solid var(--p);border-radius:8px;position:relative;cursor:pointer;animation:pop .4s both;animation-delay:calc(var(--d)*40ms)}.hc.self{background:repeating-linear-gradient(45deg,#eee 0 4px,#fff 4px 8px);cursor:default}
+.hc:hover::after{content:attr(data-t);position:absolute;bottom:115%;left:50%;transform:translateX(-50%);background:var(--p);color:#fff;padding:4px 8px;border-radius:8px;white-space:nowrap;font-size:12px;z-index:5}
+.me{max-width:420px;margin:0 auto;padding:28px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}.me p{font:700 24px/1.1 var(--h)}
+</style></head>
+<body class="lock">
+<div id="intro"><div class="ib" id="ib"></div><h1 id="ti"></h1><p id="tg"></p><button class="btn" id="go">Let's go</button><div id="wp"></div></div>
+<header><div class="logo"><svg viewBox="0 0 24 24"><path id="hh" d=""/></svg>Agent Cupid</div>
+<nav class="top"><a href="#people">People</a><a href="#dates">Dates</a><a href="#matches">Matches</a><a href="#me">Me</a></nav>
+<span class="tk"><i class="lv"></i> <b id="tk">317</b> dates today</span><button class="rb" id="rm" title="Reduce motion" aria-label="Reduce motion" data-i="act"></button></header>
+<main>
+<section class="scr" id="s-people"><h2>Meet your matches</h2><div class="two"><div><div id="st"></div>
+<div class="acts"><button class="ac n" aria-label="Nope" data-i="x"></button><button class="ac u" aria-label="Undo" data-i="undo"></button><button class="ac l" aria-label="Like" data-i="heart"></button><button class="ac s" aria-label="Super like" data-i="bolt"></button></div></div>
+<div class="cd wy" id="wy"></div></div></section>
+<section class="scr" id="s-dates"><h2>Agent Dates</h2><div class="two d"><div><button class="btn" id="sp" style="background:var(--y);color:var(--p)">Speed-Dating Round</button><div id="dl"></div></div>
+<div><div class="cd stg" id="sg"><span class="sc" id="sl"></span><div class="chat" id="ch"></div>
+<div class="act"><div id="ma"></div><svg class="gg" viewBox="0 0 24 24"><defs><clipPath id="hc"><path class="H"/></clipPath></defs><path class="H" fill="#fff"/><g clip-path="url(#hc)"><rect id="lq" width="24" height="24" fill="#FF3D8B" style="transform:translateY(100%)"/></g><path class="H" fill="none" stroke="#2B1240" stroke-width="1.2"/></svg><b class="gn" id="gn">0%</b><div id="mb"></div></div>
+<div class="vd hide" id="vd"></div></div>
+<div class="ctl"><button class="ac" id="pp" aria-label="Play or pause"></button><button class="sb on" data-s="1">1x</button><button class="sb" data-s="2">2x</button><button class="sb" data-s="4">4x</button><button class="ac" id="rp" aria-label="Replay" data-i="re"></button></div></div></div></section>
+<section class="scr" id="s-matches"><div class="nar"><h2>Top matches</h2><div class="pr"><label for="pk">Matches for</label><select id="pk"></select><button class="sb" id="tg2">Show heatmap</button></div>
+<div id="lst"><div id="pod"></div><div id="rl"></div></div><div class="cd hm hide" id="hm"></div></div></section>
+<section class="scr" id="s-me"><div class="cd me" id="me"></div></section>
+</main>
+<footer>Demo seed profiles · verify public-profile sources before submission.</footer>
+<nav class="bar"><a href="#people" data-i="users" data-t="People"></a><a href="#dates" data-i="chat" data-t="Dates"></a><a href="#matches" data-i="heart" data-t="Matches"></a><a href="#me" data-i="user" data-t="Me"></a></nav>
+<script>
+const $=(s,c=document)=>c.querySelector(s),$$=(s,c=document)=>[...c.querySelectorAll(s)];
+const HP="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z";
+$('#hh').setAttribute('d',HP);$$('.H').forEach(e=>e.setAttribute('d',HP));
+const HS=`<svg viewBox="0 0 24 24" fill="#FF3D8B" stroke="#2B1240" stroke-width="2"><path d="${HP}"/></svg>`;
+const CR=`<svg viewBox="0 0 24 24"><path d="M3 18h18l-1.5-10-5 4L12 5 9.5 12l-5-4z" fill="#FFC93C" stroke="#2B1240" stroke-width="2" stroke-linejoin="round"/></svg>`;
+const IC={x:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',undo:'<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',heart:`<path d="${HP}"/>`,bolt:'<path d="M13 2 3 14h9l-1 8 10-12h-9z"/>',play:'<path d="M6 3l14 9-14 9z"/>',pause:'<path d="M14 4h4v16h-4zM6 4h4v16H6z"/>',re:'<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>',users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',chat:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/>',user:'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',act:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'};
+const I=k=>`<svg class="ic" viewBox="0 0 24 24">${IC[k]}</svg>`;
+$$('[data-i]').forEach(e=>e.innerHTML=I(e.dataset.i)+(e.dataset.t?`<span>${e.dataset.t}</span>`:''));
+const C={pink:["#FF3D8B","#ffc2dc"],lilac:["#B9A2FF","#d9cdff"],yellow:["#FFC93C","#ffe38a"],mint:["#6EF0C2","#b5f5e1"]};
+const K="#2B1240",ACC={g:`<g fill="none" stroke="${K}" stroke-width="4"><circle cx="44" cy="76" r="13"/><circle cx="76" cy="76" r="13"/><path d="M57 76h6"/></g>`,h:`<path d="M24 72C24 40 96 40 96 72" fill="none" stroke="${K}" stroke-width="6"/><rect x="14" y="68" width="14" height="24" rx="6" fill="#FFC93C" stroke="${K}" stroke-width="3"/><rect x="92" y="68" width="14" height="24" rx="6" fill="#FFC93C" stroke="${K}" stroke-width="3"/>`,t:`<path d="M28 52Q60 18 92 52z" fill="#FFC93C" stroke="${K}" stroke-width="4"/><rect x="20" y="50" width="80" height="9" rx="4" fill="#FFC93C" stroke="${K}" stroke-width="4"/>`,b:`<path d="M60 126l-14-8v16zM60 126l14-8v16z" fill="#FF6B4A" stroke="${K}" stroke-width="3"/>`};
+const mas=(c,a,w=140)=>`<svg class="mc" width="${w}" viewBox="0 0 120 140"><path d="M60 28V16" stroke="${K}" stroke-width="4"/><path d="M60 16C54 6 44 12 50 20l10 8 10-8c6-8-4-14-10-4z" fill="#FF3D8B" stroke="${K}" stroke-width="3"/><path d="M18 82C18 48 36 30 60 30s42 18 42 52c0 36-18 52-42 52S18 118 18 82z" fill="${c}" stroke="${K}" stroke-width="5"/><g class="ey"><circle cx="44" cy="76" r="7" fill="${K}"/><circle cx="76" cy="76" r="7" fill="${K}"/><circle cx="46" cy="73" r="2.5" fill="#fff"/><circle cx="78" cy="73" r="2.5" fill="#fff"/></g><ellipse cx="30" cy="94" rx="8" ry="5" fill="#FF6B4A" opacity=".5"/><ellipse cx="90" cy="94" rx="8" ry="5" fill="#FF6B4A" opacity=".5"/><ellipse class="mo" cx="60" cy="98" rx="8" ry="3.5" fill="${K}"/>${ACC[a]||''}</svg>`;
+/* data */
+let P=[["Aria",24,"Product Designer","pink","Adventurous","t","Loves sunrise hikes and dry humor.",["Hiking","Trail running","Coffee"],["Someone curious","Loves travel"],["Photography","Hiking"],["Adventurous","Funny","Kind"]],
+["Dev",27,"Software Engineer","lilac","Ambitious","h","Runs a trail club. Codes by day, mountains by weekend.",["Hiking","Trail running","Gaming"],["Active partner","Outdoorsy"],["Cycling","Gaming"],["Loyal","Funny","Ambitious"]],
+["Meera",26,"Architect","yellow","Creative","g","Sketches buildings, bakes sourdough on Sundays.",["Sketching","Jazz","Coffee"],["Appreciates art","Patient"],["Sketching","Baking"],["Creative","Calm","Witty"]],
+["Kabir",31,"Chef","mint","Chill","b","Too much garlic in everything. Loves late-night diners.",["Cooking","Coffee","Jazz"],["Foodie","Night owl"],["Cooking","Vinyl"],["Warm","Chill","Funny"]],
+["Zara",29,"Marketing Lead","pink","Driven","g","Climbs career ladders and actual mountains.",["Climbing","Reading","Hiking"],["Driven","Direct"],["Climbing","Reading"],["Ambitious","Honest","Funny"]],
+["Leo",34,"Teacher","mint","Cozy","b","Third-grade teacher. Brings cookies to every meeting.",["Painting","Board games","Reading"],["Kind","Loves kids"],["Painting","Baking"],["Patient","Warm","Creative"]],
+["Nina",31,"Doctor","pink","Calm","h","ER resident. Runs on coffee and good playlists.",["Yoga","Live music","Coffee"],["Calm energy","Gets long shifts"],["Yoga","Cooking"],["Compassionate","Driven","Funny"]],
+["Omar",26,"Musician","lilac","Spontaneous","h","Gig musician. Writes songs about missed trains.",["Guitar","Live music","Jazz"],["Loves live music","Spontaneous"],["Songwriting","Guitar"],["Creative","Sensitive","Chill"]]]
+.map((x,i)=>({id:i+1,n:x[0],a:x[1],r:x[2],v:x[3],tg:x[4],ac:x[5],o:x[6],i:x[7],nd:x[8],h:x[9],q:x[10]}));
+const ME={id:0,n:"You",a:25,v:"pink",ac:"g",i:["Coffee","Hiking","Live music"],h:["Reading"],nd:["Someone fun"],q:["Curious","Funny","Kind"]};
+const FEMALE_AVATAR_NAMES=new Set(['ca rachana ranade','shreya pattar','ghazal alagh','radhika gupta','vineeta singh','namita thapar']);
+const MALE_AVATAR_NAMES=new Set(['ankur warikoo','raj shamani','sharan hegde','varun mayya','ishan sharma','ranveer allahbadia','pranjal kamra','akshat shrivastava','nikhil kamath','nithin kamath','kunal shah','ritesh agarwal','deepinder goyal','bhavish aggarwal','vijay shekhar sharma','kunal bahl','anupam mittal','aman gupta','peyush bansal']);
+const av=p=>{const name=String(p.n||p.name||'').trim().toLowerCase(),female=FEMALE_AVATAR_NAMES.has(name),male=MALE_AVATAR_NAMES.has(name),top=female?'bigHair':male?'shortFlat':'shortWaved',facialHairProbability=male?100:0;return `https://api.dicebear.com/9.x/avataaars/svg?seed=${encodeURIComponent(p.n||p.name||'Agent')}&backgroundColor=${C[p.v][1].slice(1)}&topVariant=${top}&topProbability=100&facialHairProbability=${facialHairProbability}&facialHairVariant=beardLight`;};
+addEventListener('error',e=>{const t=e.target;if(t.tagName=='IMG'&&!t.dataset.f){t.dataset.f=1;t.src='data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#ffc2dc"/><text x="50" y="68" font-size="50" font-family="sans-serif" text-anchor="middle" fill="#2B1240">${t.alt[0]||'?'}</text></svg>`)}},true);
+const tok_=a=>(Array.isArray(a.i)?a.i:[]).concat(Array.isArray(a.h)?a.h:[]),shared=(a,b)=>[...new Set(tok_(a).filter(x=>tok_(b).includes(x)))];
+let apiScores=Object.create(null);
+const localScore=(a,b)=>Math.min(97,52+shared(a,b).length*11+(a.v==b.v?6:0)+((a.id*7+b.id*7+a.id*b.id)%14));
+const sc=(a,b)=>{const r=(apiScores[a.id]||{})[b.id];return r&&Number.isFinite(+r.score)?+r.score:localScore(a,b)};
+const why=(a,b)=>{const r=(apiScores[a.id]||{})[b.id];if(r&&r.reason)return r.reason;const s=shared(a,b);return s.length?`Both mention ${String(s[0]).toLowerCase()}.`:'Not enough shared public topics to explain this demo match yet.'};
+function mk(a,b){
+const ai=Array.isArray(a.i)?a.i:[],bi=Array.isArray(b.i)?b.i:[],an=Array.isArray(a.nd)?a.nd:[],aq=Array.isArray(a.q)?a.q:[],bq=Array.isArray(b.q)?b.q:[],s=shared(a,b),S=sc(a,b),
+t=String(s[0]||ai[0]||bi[0]||'public profile topics unavailable').toLowerCase(),
+L=[["a",ai.length?`${a.n} publicly discusses ${t}.`:`${a.n}'s public-topic analysis is pending.`,1],["b",s.length?`Wait, ${b.n} mentions that too.`:'No shared public topics are recorded yet.',s.length?1:0],["a",an.length?`${a.n} publicly lists ${an[0]}.`:`No public dating preferences are recorded for ${a.n}.`,1],["b",bq.length?`${b.n}'s demo profile notes ${String(bq[0]).toLowerCase()}.`:`No personal traits are inferred for ${b.n}.`,1],["a",aq.length>2?`${a.n} is also described as ${String(aq[2]).toLowerCase()}.`:'This is a sandbox estimate from public-profile data only.',1],["b",'No one is contacted; this is a demo simulation.',1],["a",'More public profile topics are needed for a meaningful comparison.',1]];
+const ups=L.filter(l=>l[2]).length,T=[];let g=0,k=0;L.forEach(l=>{if(l[2]){k++;g=Math.round(S*k/ups)}else g=Math.max(0,g-6);T.push(g)});
+return{a,b,s:S,L,T,sn:(a.id+b.id)%4}}
+/* intro */
+$('#ib').innerHTML=`<span class="l">${mas("#FF3D8B","g",130)}</span><span class="r">${mas("#B9A2FF","h",130)}</span><span class="hp">${HS}</span>`;
+[...'Agent Cupid'].forEach((c,i)=>$('#ti').insertAdjacentHTML('beforeend',`<span style="animation-delay:${1+i*.07}s">${c==' '?'&nbsp;':c}</span>`));
+const TG='Your agent does the dating. You get the gossip.';setTimeout(()=>{let i=0;const v=setInterval(()=>{$('#tg').textContent=TG.slice(0,++i);if(i>=TG.length)clearInterval(v)},28)},1900);
+let ent=0;function enter(){if(ent++)return;const b=$('#go').getBoundingClientRect(),w=$('#wp');w.style.left=b.left+b.width/2+'px';w.style.top=b.top+b.height/2+'px';w.classList.add('on');setTimeout(()=>{$('#intro').style.opacity=0;document.body.classList.remove('lock');setTimeout(()=>$('#intro').remove(),500)},650)}
+$('#intro').onclick=enter;
+let tn=317;setInterval(()=>$('#tk').textContent=++tn,4000);
+$('#rm').onclick=()=>document.body.classList.toggle('rm');
+/* people */
+const st=$('#st');let N=P.length,cur=0,x0=null,busy=0;const hist=[];
+let cards=[];
+function buildCards(){
+  st.innerHTML='';
+  cards=P.map(p=>{const c=document.createElement('div');c.className='c';c.innerHTML=`<i class="sm y">MATCH?</i><i class="sm n">NOPE</i><div class="ph" style="background:${C[p.v][1]}"><img src="${av(p)}" alt="${p.n}"><span class="tag">${p.tg}</span><span class="mb">${mas(C[p.v][0],p.ac,62)}</span></div><div class="inf"><div class="nm"><b>${p.n}${p.a?', '+p.a:''}</b><span class="role">${p.r}</span></div><div class="bio">${p.o}</div><div class="chips">${p.i.map(x=>`<span class="chip">${x}</span>`).join('')}</div></div>`;st.append(c);return c});
+}
+buildCards();
+function profileLink(label,url,p){
+  if(!url)return '';
+  try{
+    const u=new URL(url);
+    if(u.protocol!=='https:')return '';
+    const slug=String(p.n||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+    const path=u.pathname.replace(/\/$/,'').toLowerCase();
+    const placeholder=label==='LinkedIn'?path==='/in/'+slug:path==='/'+slug;
+    if(placeholder)return `<span class="pl" style="background:#fff" title="Seed placeholder URL; replace with a verified public profile">${label} · demo link</span>`;
+    return `<a class="pl" style="background:#fff;text-decoration:none;color:var(--p)" href="${u.href}" target="_blank" rel="noopener noreferrer" title="URL supplied by API; verify before claiming source">${label}</a>`;
+  }catch(e){return ''}
+}
+function wy(){
+  const p=P[cur];if(!p)return;
+  const links=profileLink('LinkedIn',p.linkedin,p)+profileLink('Instagram',p.instagram,p);
+  $('#wy').innerHTML=`<h3>Why your agent likes ${p.n}</h3><div class="sp">${mas(C[p.v][0],p.ac,56)}<span>Hi! I'm ${p.n}'s agent. ${p.o}</span></div><h4>Profile links · demo data</h4><div>${links||'<span class="pl">No profile links provided</span>'}</div>`+[['Needs',p.nd,'#ffd0e3'],['Hobbies',p.h,'#FFF1B8'],['Interests',p.i,'#e4dbff'],['Qualities',p.q,'#c8fbe9']].map(([t,a,c])=>`<h4>${t}</h4>`+a.map(x=>`<span class="pl" style="background:${c}" title="Trait from seed data">${x}</span>`).join('')).join('');
+}
+function lay(){cards.forEach((c,i)=>{const o=(i-cur+N)%N;c.style.zIndex=9-o;c.style.opacity=o<3?1:0;c.style.pointerEvents=o?'none':'auto';c.style.transform=o?`translateY(${o*14}px) scale(${1-o*.05}) rotate(${o==1?-3:2.5}deg)`:'';$$('.sm',c).forEach(s=>s.style.opacity=0)});wy();busy=0}
+function hearts(n){const r=$('.ac.l').getBoundingClientRect();for(let i=0;i<n;i++){const h=document.createElement('div');h.className='bh';h.innerHTML=HS;h.style.cssText=`left:${r.left+r.width/2-10}px;top:${r.top}px;--x:${(Math.random()-.5)*170}px;--y:${-70-Math.random()*90}px`;document.body.append(h);setTimeout(()=>h.remove(),700)}}
+function fly(d,n){if(busy)return;busy=1;const c=cards[cur];c.style.transition='';c.style.transform=`translateX(${d*140}%) rotate(${d*25}deg)`;c.style.opacity=0;$(d>0?'.y':'.n',c).style.opacity=1;if(d>0)hearts(n||6);setTimeout(()=>{hist.push(cur);cur=(cur+1)%N;lay()},380)}
+st.onpointerdown=e=>{if(busy||!cards[cur].contains(e.target))return;x0=e.clientX;cards[cur].style.transition='none';cards[cur].setPointerCapture(e.pointerId)};
+st.onpointermove=e=>{if(x0==null)return;const dx=e.clientX-x0,c=cards[cur];c.style.transform=`translateX(${dx}px) rotate(${dx/14}deg)`;$('.y',c).style.opacity=dx/110;$('.n',c).style.opacity=-dx/110};
+st.onpointerup=e=>{if(x0==null)return;const dx=e.clientX-x0;x0=null;cards[cur].style.transition='';Math.abs(dx)>110?fly(dx>0?1:-1):lay()};
+$('.ac.n').onclick=()=>fly(-1);$('.ac.l').onclick=()=>fly(1);$('.ac.s').onclick=()=>fly(1,10);$('.ac.u').onclick=()=>{if(hist.length&&!busy){cur=hist.pop();lay()}};
+addEventListener('keydown',e=>{if($('#s-people').classList.contains('on')){if(e.key=='ArrowRight')fly(1);if(e.key=='ArrowLeft')fly(-1)}});
+/* dates */
+const SC=[["#d9cdff","Cafe date"],["#b8f3d9","Park picnic"],["#ffc9a8","Pasta night"],["#a98bff","Bowling"]];
+function fallbackDates(){return [[0,1],[2,3],[4,5],[6,7],[3,6],[5,0]].filter(([a,b])=>P[a]&&P[b]).map(([a,b],i)=>({...mk(P[a],P[b]),live:i==2||i==4}));}
+let DT=fallbackDates();
+let tok=0,spd=1,paused=0,cd=null,step=0,pend=null;
+const ty=()=>$$('.ty').forEach(e=>e.remove());
+function bub(side,h,c=''){const ch=$('#ch'),e=document.createElement('div');e.className=`bb ${side} ${c}`;e.innerHTML=h;ch.append(e);while(ch.children.length>5)ch.firstChild.remove();return e}
+function gauge(v){$('#lq').style.transform=`translateY(${100-v}%)`;$('#gn').textContent=v+'%'}
+function load(d){cd=d;tok++;step=0;paused=0;$('#pp').innerHTML=I('pause');$('#ch').innerHTML='';$('#vd').classList.add('hide');$$('.cf').forEach(e=>e.remove());gauge(0);
+$('#ma').innerHTML=mas(C[d.a.v][0],d.a.ac,150)+`<div class="an">${d.a.n}'s Agent</div>`;$('#mb').innerHTML=mas(C[d.b.v][0],d.b.ac,150)+`<div class="an">${d.b.n}'s Agent</div>`;
+$('#sg').style.background=SC[d.sn][0];$('#sl').textContent=SC[d.sn][1];$$('.di').forEach(e=>e.classList.toggle('on',DT[+e.dataset.k]===d));run(tok)}
+function talk(s){$$('#ma svg,#mb svg').forEach(e=>e.classList.remove('talk'));if(s)$(s=='a'?'#ma svg':'#mb svg').classList.add('talk')}
+function run(t){if(t!=tok||paused)return;const l=cd.L[step];if(!l){talk();return fin(cd)}ty();bub(l[0],'<i></i><i></i><i></i>','ty');talk(l[0]);
+setTimeout(()=>{if(t!=tok||paused)return;ty();$$('.bb').forEach(b=>b.classList.add('old'));bub(l[0],l[1]);gauge(cd.T[step]);const f=document.createElement('div');f.className='fl';f.textContent=l[2]?'💕':'🤔';$('#sg').append(f);setTimeout(()=>f.remove(),1000);step++;setTimeout(()=>run(t),900/spd)},1000/spd)}
+function fin(d){if(d.s>80)for(let i=0;i<40;i++){const c=document.createElement('i');c.className='cf';c.style.cssText=`left:${Math.random()*100}%;background:${['#FF3D8B','#FFC93C','#6EF0C2','#B9A2FF'][i%4]};animation-delay:${Math.random()*.6}s`;$('#sg').append(c);setTimeout(()=>c.remove(),2600)}
+const v=$('#vd'),summary=d.log||why(d.a,d.b),safeSummary=String(summary).replace(/[&<>\"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[ch]));v.innerHTML=`<div class="stp">${d.s}% MATCH</div><p>${safeSummary}</p><div><button class="btn s" id="vr">Replay</button> <button class="btn s" id="vm">See matches</button></div>`;v.classList.remove('hide');
+$('#vr').onclick=()=>load(d);$('#vm').onclick=()=>{mp=P.includes(d.a)?d.a:P[0];location.hash='#matches'}}
+$('#pp').onclick=()=>{paused=!paused;$('#pp').innerHTML=I(paused?'play':'pause');if(!paused){ty();run(tok)}};
+$('#rp').onclick=()=>load(cd);$$('.sb[data-s]').forEach(b=>b.onclick=()=>{spd=+b.dataset.s;$$('.sb[data-s]').forEach(x=>x.classList.toggle('on',x==b))});
+$('#dl').onclick=e=>{const x=e.target.closest('.di');if(x)load(DT[+x.dataset.k])};
+function dates(){$('#dl').innerHTML=DT.map((d,i)=>`<div class="di" data-k="${i}"><img src="${av(d.a)}" alt="${d.a.n}"><img src="${av(d.b)}" alt="${d.b.n}"><div><div class="dn">${d.a.n} &amp; ${d.b.n}</div><small class="${d.live?'lvt':''}">${d.live?'Chatting…':d.s+'% match'}</small></div></div>`).join('');const p=pend;pend=null;load(p||cd||DT[0])}
+const go=(a,b)=>{pend=mk(a,b);location.hash='#dates'};
+$('#sp').onclick=()=>{const m=document.createElement('div');m.className='mo2';m.innerHTML=`<div class="cd mdl"><button class="x" aria-label="Close">×</button><h2>Speed-Dating Round</h2><div class="sg">${'<div class="ms"></div>'.repeat(6)}</div><p class="cn">Dates done <b id="dn">0</b>/300</p><p class="cn hide" id="bn">Round complete! <button class="btn s" id="vm2">View matches</button></p></div>`;document.body.append(m);
+const fill=()=>$$('.ms',m).forEach(s=>{const a=P[Math.floor(Math.random()*N)],b=P[(a.id+Math.floor(Math.random()*(N-1)))%N];s.innerHTML=mas(C[a.v][0],a.ac,50)+`<b>${sc(a,b)}%</b>`+mas(C[b.v][0],b.ac,50)});fill();
+let n=0;const f=setInterval(fill,700),c=setInterval(()=>{n=Math.min(300,n+3+Math.floor(Math.random()*9));$('#dn').textContent=n;if(n>=300){clearInterval(c);clearInterval(f);$('#bn').classList.remove('hide')}},100);
+const close=()=>{clearInterval(c);clearInterval(f);m.remove()};$('.x',m).onclick=close;m.onclick=e=>{if(e.target==m)close()};$('#vm2',m).onclick=()=>{close();location.hash='#matches'}};
+/* matches */
+let mp=P[0],heat=0;
+function cu(){$$('.rg').forEach(r=>{const v=+r.style.getPropertyValue('--v'),b=r.firstChild;let t0=null;const f=ts=>{if(t0==null)t0=ts;const k=Math.min(1,(ts-t0)/900);r.style.setProperty('--v',v*k);b.textContent=Math.round(v*k)+'%';if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)})}
+function mt(){$('#pk').innerHTML=P.map(p=>`<option value="${p.id}"${p==mp?' selected':''}>${p.n}</option>`).join('');
+const L=P.filter(p=>p!=mp).sort((a,b)=>sc(mp,b)-sc(mp,a)),rg=(v,s)=>`<div class="rg" style="--v:${v};width:${s}px;height:${s}px"><b>${v}%</b></div>`,
+col=(p,k,h)=>`<div class="pc"><div class="cr">${k==1?CR:`<span class="md">${k}</span>`}</div><img class="pa" src="${av(p)}" alt="${p.n}"><b class="pn">${p.n}</b><small class="gs">${why(mp,p)}</small>${rg(sc(mp,p),58)}<div class="bk" style="height:${h}px;animation-delay:${k==1?.9:k==2?.5:.1}s;background:${k==1?'#FFF1B8':k==2?'#e4dbff':'#c8fbe9'}">${k}</div></div>`;
+$('#pod').innerHTML=col(L[1],2,70)+col(L[0],1,110)+col(L[2],3,44);
+$('#rl').innerHTML=L.slice(3).map((p,i)=>`<div class="rw"><span class="rk">${i+4}</span><img class="pa" src="${av(p)}" alt="${p.n}"><div class="gr"><b>${p.n}</b><small>${why(mp,p)}</small></div>${rg(sc(mp,p),52)}<button class="lk" data-b="${p.id}">View date</button></div>`).join('');
+let h='<div></div>'+P.map(p=>`<img class="ha" src="${av(p)}" alt="${p.n}" title="${p.n}">`).join('');
+P.forEach((a,i)=>{h+=`<img class="ha" src="${av(a)}" alt="${a.n}" title="${a.n}">`;P.forEach((b,j)=>{const v=sc(a,b);h+=a==b?'<div class="hc self"></div>':`<div class="hc" data-a="${i}" data-b="${j}" data-t="${a.n} × ${b.n}: ${v}%" style="background:rgba(255,61,139,${(v-48)/50+.08});--d:${i+j}"></div>`})});
+$('#hm').innerHTML=h;cu()}
+$('#pk').onchange=e=>{mp=P[e.target.value-1];mt()};
+$('#tg2').onclick=()=>{heat=!heat;$('#lst').classList.toggle('hide',heat);$('#hm').classList.toggle('hide',!heat);$('#tg2').textContent=heat?'Show list':'Show heatmap'};
+$('#rl').onclick=e=>{const b=e.target.closest('[data-b]');if(b)go(mp,P[+b.dataset.b-1])};
+$('#hm').onclick=e=>{const c=e.target.closest('[data-a]');if(c)go(P[+c.dataset.a],P[+c.dataset.b])};
+/* me */
+$('#me').innerHTML=`${mas("#FF3D8B","g",150)}<h2 style="margin:0">You</h2><p>Your agent is warming up. Send it out and see who it likes.</p><button class="btn" id="mg">Send my agent on a date</button>`;
+$('#mg').onclick=()=>go(ME,[...P].sort((a,b)=>sc(ME,b)-sc(ME,a))[0]);
+/* router */
+function route(){const h=(location.hash||'#people').slice(1),k=['people','dates','matches','me'].includes(h)?h:'people';
+$$('.scr').forEach(s=>s.classList.toggle('on',s.id=='s-'+k));$$('nav a').forEach(a=>a.classList.toggle('on',a.hash=='#'+k));scrollTo(0,0);
+if(k!='dates')tok++;if(k=='dates')dates();if(k=='matches')mt()}
+addEventListener('hashchange',route);lay();route();
+
+function fromApiPerson(p,i){
+  const color=String(p.color||'').toUpperCase();
+  const v=color==='#FF4D8D'||color==='#FF3D8B'?'pink':color==='#9B7BFF'||color==='#B9A2FF'?'lilac':color==='#FFC93C'?'yellow':color==='#3DDBB0'||color==='#6EF0C2'?'mint':['pink','lilac','yellow','mint'][i%4];
+  const q=Array.isArray(p.qualities)?p.qualities.map(x=>Array.isArray(x)?x[0]:String(x)).filter(Boolean):[];
+  return {id:Number(p.id),n:String(p.name||'Person'),a:p.age?Number(p.age):null,r:String(p.role||''),v,tg:String(p.vibe||'Curious'),ac:['g','h','t','b'][i%4],o:String(p.agent||'Their agent is still learning about them.'),i:Array.isArray(p.interests)?p.interests:[],nd:Array.isArray(p.needs)?p.needs:[],h:Array.isArray(p.hobbies)?p.hobbies:[],q:q.length?q:['No personal traits inferred'],linkedin:String(p.linkedin||''),instagram:String(p.instagram||'')};
+}
+function mapApiScores(raw){
+  const out=Object.create(null);
+  Object.keys(raw||{}).forEach(id=>{out[id]=Object.create(null);(raw[id]||[]).forEach(row=>{if(row.person&&row.person.id!=null)out[id][row.person.id]={score:Number(row.score),reason:String(row.reason||'')};});});
+  return out;
+}
+function mapApiDates(raw){
+  const byName=Object.create(null);P.forEach(p=>byName[p.n.toLowerCase()]=p);
+  return (Array.isArray(raw)?raw:[]).map((d,i)=>{
+    const a=byName[String(d.agent_a||'').toLowerCase()],b=byName[String(d.agent_b||'').toLowerCase()];
+    if(!a||!b)return null;
+    const item=mk(a,b);item.s=Number(d.score)||item.s;item.log=String(d.log||'');item.status=String(d.status||'');item.live=/live|chat|active|running/i.test(item.status);item.sn=i%SC.length;return item;
+  }).filter(Boolean);
+}
+function escapeHtml(value){return String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+async function loadBackendData(){
+  const queryApi=new URLSearchParams(location.search).get('api');
+  const localHost=location.protocol==='file:'||location.hostname==='localhost'||location.hostname==='127.0.0.1';
+  const apiBase=(queryApi|| (localHost?'http://127.0.0.1:8000':'/api')).replace(/\/$/,'');
+  $('#tk').parentElement.title='Loading FastAPI profile data; demo seed cards remain visible meanwhile.';
+  try{
+    const responses=await Promise.all([
+      fetch(apiBase+'/people'),
+      fetch(apiBase+'/dates').catch(()=>null),
+      fetch(apiBase+'/rankings').catch(()=>null)
+    ]);
+    if(!responses[0]||!responses[0].ok)throw new Error('GET /people failed');
+    const rawPeople=await responses[0].json();
+    const rawDates=responses[1]&&responses[1].ok?await responses[1].json():[];
+    const rawRankings=responses[2]&&responses[2].ok?await responses[2].json():{};
+    if(!Array.isArray(rawPeople)||rawPeople.length<2)throw new Error('The API returned fewer than two people');
+    apiScores=mapApiScores(rawRankings);
+    P=rawPeople.map(fromApiPerson).sort((a,b)=>a.id-b.id);
+    N=P.length;cur=0;hist.length=0;mp=P[0];cd=null;
+    DT=mapApiDates(rawDates);if(!DT.length)DT=fallbackDates();
+    buildCards();lay();
+    $('#tk').parentElement.title='FastAPI connected: '+P.length+' profiles. Profile links still need verification.';
+    if(location.hash==='#dates')dates();
+    if(location.hash==='#matches')mt();
+    console.info('Agent Cupid API connected:',P.length,'people,',DT.length,'dates');
+  }catch(err){
+    $('#tk').parentElement.title='FastAPI not connected; showing built-in demo data. Start the backend at http://127.0.0.1:8000.';
+    console.warn('Agent Cupid is using its built-in demo data:',err.message);
+  }
+}
+
+loadBackendData();
+</script></body></html>
