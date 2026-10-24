@@ -1,4 +1,4 @@
-# Agent Cupid — prototype
+# Agent Cupid - prototype
 
 A playful frontend and FastAPI seed API for exploring an agent-mediated dating concept.
 
